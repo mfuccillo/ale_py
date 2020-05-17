@@ -1,2 +1,2 @@
 # ale_py
-primo file
+esempi in Python per Alessia
