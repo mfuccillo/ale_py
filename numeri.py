@@ -1,6 +1,15 @@
 #!python3.6
 # coding: iso-8859-1
 
+"""cose che riguardano l'estetica di un numero
+cioè come rendere il numero più leggibile da parte di un essere umano
+
+riferimenti della funzione format:
+https://www.w3schools.com/python/ref_string_format.asp
+
+https://docs.python.org/3.7/library/string.html#formatstrings
+
+"""
 
 c1 = 3
 c2 = 0.1
@@ -30,7 +39,7 @@ print("una strana stringa con le graffe:", res)
 print("riproviamo:",  res.format(x))
 
 # cioè le graffe sono state sostituite dal numero che volevo stampare
-# allora vediamo di mogliorare l'estetica
+# allora vediamo di migliorare l'estetica
 res = "il mio risultato e' {:.2f}"
 print("solo 2 decimali:",  res.format(x))
 
@@ -42,18 +51,3 @@ print("solo 2 decimali:",  res.format(x))
 prezzo = 2499.99
 
 print("prezzo di un macbook: {:_}".format(prezzo))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
