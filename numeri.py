@@ -9,6 +9,10 @@ https://www.w3schools.com/python/ref_string_format.asp
 
 https://docs.python.org/3.7/library/string.html#formatstrings
 
+interessante articolo sulla formattazione
+https://realpython.com/python-string-formatting/
+
+
 """
 
 c1 = 3
