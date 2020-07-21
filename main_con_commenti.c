@@ -101,6 +101,13 @@ int main() {
         // e sono pronto per il giro successivo.
         // sembra ragionevole ma ti tocca lavorare su un file che non è una struttura dati molto comoda da maneggiare.
         // ti prego di riflettere.
+        // altro problema: non è garantito che i byte siano scritti sul file quando si esegue una fputs()
+        // vado a memoria ma mi sembra che questa garanzia ce l'hai solo dopo una close o una fflush()
+        // prima della fflush() i dati non sono "nel file" ma "in un buffer"
+
+
+
+
         
 
 
@@ -124,7 +131,7 @@ int main() {
         }
 
 
-        fclose(fp);   // siamo sicuri che la close del file vada all'interno del loop?
+        fclose(fp);
 
         // questa è un po' brutale: io avevo solo fatto un esempio molto veloce
         // così com'è scritto ora, si esce dal loop anche se l'utente scrive qualsiasi parola che inizia con la q
@@ -134,8 +141,6 @@ int main() {
 
 
     }   /* fine del loop principale */
-
-    /* non è meglio mettere qui la close del file? */
 
 
     return(0);
