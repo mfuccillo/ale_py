@@ -150,7 +150,9 @@ int printRighe(struct Riga * head ){
     if (head != NULL) {
         do {
             r++;
-            printf("%i: %i %s\n", r, curr->tipo, curr->testo);
+            // aggiunto la stampa dei puntatori così vedo come i vari elementi sono collegati
+            printf("%i: %i %p %p %s\n", r, curr->tipo, curr, curr->next, curr->testo);
+
             curr = curr->next;
         }
         while (curr != NULL);
