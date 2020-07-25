@@ -35,7 +35,8 @@ struct Riga {
 
 
 int prova1(){
-    // giusto per prendere dimestichezza con la sintassi che non mi ricordo piu niente
+    //  giusto per prendere dimestichezza con la sintassi che non mi ricordo piu niente
+
     struct Riga r;  // dichiaro una variabile di tipo Riga
     r.tipo = 1;     // assegno qualcosa di semplice
 
@@ -78,7 +79,7 @@ struct Riga * initRiga(char * testo){
     struct Riga *p;
 
     // manca il controllo che malloc abbia allocato qualcosa
-    // se malloc non ha allocato perchè ha finito la memoria p==NULL
+    // se malloc non ha allocato è perchè ha finito la memoria p==NULL
     p = (struct Riga *) malloc(sizeof(struct Riga));
 
     p->testo = strdup(testo);  //rileggere le specifiche di strdup()
@@ -89,20 +90,114 @@ struct Riga * initRiga(char * testo){
 }
 
 
-
 int prova3(){
     // come utilizzare initRiga
     struct Riga *pr;
     char tx[] = "ciao Alessia";
     pr = initRiga(tx);
     printf("prova initriga %i %s\n", pr->tipo, pr->testo);
-
 }
 
 
-/*
-struct Riga *head = NULL; // puntatore al primo elemento della lista
-*/
+/*  adesso siamo pronti per la lista
+    ma prima ci serve qualche altra funzione:
+    per esempio una append e una print */
+
+
+struct Riga * appendRiga(struct Riga ** headrif, char * testo){
+    // va in fondo alla lista e appende un nuovo elemento
+    // headrif non è head ma l'indirizzo di head, infatti ci sono due asterischi
+    // e quando richamerò la funzione la chiamata non sarà  appendRiga(head, ...   ma   appendRiga( & head, ...
+    // tutto questo serve per gestire la situazione di lista vuota:
+    // all'inizio del programma la lista è vuota cioè head punta a NULL (non ho ancora allocato nessun elemento di tipo Riga)
+    // all'inserimento del primo elemento cosa succede:
+    //     creo un elemento Riga e il puntatore a questo elemento è p
+    //     devo fare in modo che head punti alla stessa memoria di p
+    //     quindi devo modificare il contenuto, (in altre parole il valore) di head e quindi devo passare a appendRiga il parametro head "by reference" e non "by value"
+
+
+    struct Riga *p;            // nuovo elemento da appendere alla lista
+    struct Riga *curr = *headrif;  // mi serve un altro puntatore: puntatore all'elemento corrente, che all'inizio punta al primo elemento o a NULL se la lista è vuota
+
+    p = initRiga(testo);       // ricordarsi di modificare initRiga in modo che ritorni NULL se la malloc non è andata bene
+    // printf("debug - append - creato nuovo elemento %s\n", testo);
+    if (p != NULL) {
+
+        if (*headrif != NULL) {
+            while (curr->next != NULL) {   // questo piccolo loop va in fondo alla lista
+                curr = curr->next;
+            }
+        // printf("debug - append - sono in fondo\n");
+        curr->next = p;    // a quello che era l'ultimo elemento ne abbiamo appeso un altro
+        }
+        else {
+            *headrif = p;
+        }
+
+        // printf("debug - append - appeso\n", p->testo);
+    }
+
+    return p;   // magari ci farà comodo avere il puntatore all'ultimo elemento
+}
+
+int printRighe(struct Riga * head ){
+    // stampa tutta la lista
+
+    int r = 0;
+
+    struct Riga *curr = head;
+
+    if (head != NULL) {
+        do {
+            r++;
+            printf("%i: %i %s\n", r, curr->tipo, curr->testo);
+            curr = curr->next;
+        }
+        while (curr != NULL);
+    }
+    else{
+        printf("*** LISTA VUOTA***\n");
+    }
+
+    return r;
+}
+
+int prova4(){
+    // appendere e stampare metodo classico
+
+    struct Riga *head = NULL; // puntatore al primo elemento della lista
+
+    struct Riga *p;           // puntatore all'ultimo elemento
+    int r;
+
+    printf("\n----- prova con la lista----\n", r);
+
+    r = printRighe(head);   // non dovrebbe stampare nulla e non dovrebbe dare errore
+    printf("\n   righe stampate: %i\n\n", r);
+
+
+
+    p= appendRiga(&head, "ciao Alessia");
+
+    r = printRighe(head);   // dovrebbe stampare 1 riga
+    printf("\n   righe stampate: %i\n", r);
+
+
+
+    p= appendRiga(&head, "ciao Federica");
+    p= appendRiga(&head, "ciao Stephanie");
+    p= appendRiga(&head, "ciao Sandy");
+    p= appendRiga(&head, "ciao Trilly");
+    p= appendRiga(&head, "ciao Uly");    // ho dimenticato nessuno?
+
+    printf("debug - prova - appeso tutte le righe\n");
+
+
+    r = printRighe(head);
+
+    printf("\n   righe stampate: %i\n", r);
+}
+
 
 // giusto per vedere se compila
 
@@ -110,4 +205,5 @@ int main() {
     prova1();
     prova2();
     prova3();
+    prova4();
 }
